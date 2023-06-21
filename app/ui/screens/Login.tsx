@@ -18,8 +18,8 @@ import {
 import CustomInput from '@/ui/components/CustomInput';
 import CustomButton from '@/ui/components/CustomButton';
 import {AuthContainer} from '@/core/auth/authContainer';
-import {AuthRepository} from '@/core/auth/domain/AuthRepossitory';
 import {AuthLocator} from '@/core/auth/domain/AuthLocator';
+import {LoginUseCase} from 'core/auth/application/LoginUseCase';
 const logo = require('@/assets/logo.png');
 
 const styles = StyleSheet.create({
@@ -119,11 +119,9 @@ const styles = StyleSheet.create({
 });
 
 export default function Login() {
-  const toLogin = () => {
-    const usecase = AuthContainer.get<AuthRepository>(
-      AuthLocator.AuthRepository,
-    );
-    usecase.login('123', '123').then(console.log);
+  const toLogin = async () => {
+    const usecase = AuthContainer.get<LoginUseCase>(AuthLocator.LoginUseCase);
+    usecase.login('david.salazar2@autorescuesolutions.com', 'aegon5targaryen');
   };
   return (
     <SafeAreaView>

@@ -1,18 +1,17 @@
-import {inject} from 'inversify';
+import {inject, injectable} from 'inversify';
 import {AuthLocator} from '../domain/AuthLocator';
 import {AuthRepository} from '../domain/AuthRepossitory';
-import {LoginResponse} from './LoginResponse';
+import {LoginResponse} from '../domain/LoginResponse';
 
+@injectable()
 export class LoginUseCase {
-  private _authRepository: AuthRepository;
+  private _repository: AuthRepository;
 
-  constructor(
-    @inject(AuthLocator.AuthRepository) authRepository: AuthRepository,
-  ) {
-    this._authRepository = authRepository;
+  constructor(@inject(AuthLocator.AuthRepository) repository: AuthRepository) {
+    this._repository = repository;
   }
 
-  login(account: string, password: string): Promise<LoginResponse> {
-    return this._authRepository.login(account, password);
+  async login(account: string, password: string): Promise<LoginResponse> {
+    return this._repository.login(account, password);
   }
 }

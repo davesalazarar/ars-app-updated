@@ -1,3 +1,4 @@
 export const AuthLocator = {
-  AuthRepository: Symbol.for('AuthRepository'),
+  AuthRepository: Symbol.for('authRepository'),
+  LoginUseCase: Symbol.for('LoginUseCase'),
 };

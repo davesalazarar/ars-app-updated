@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+// Read in environment variables from environment and creating app.config.json
+// (and use an .env file if one exists)
+
+// Set the environment variable BUILD_ENV=production to use
+// a PROD_ prefix in front of the env variables, used in Travis.
+// e.g. setting BUILD_ENV=production would feed the current PROD_API_URL value
+// into the app as API_URL
+
+const fs = require('fs');
+require('dotenv').config();
+const validEnvs = ['production', 'uat', 'sit', 'dev'];
+const validPrefixes = ['PROD_', 'UAT_', 'SIT_', 'DEV_'];
+const envKeys = [
+  'IOS_CODEPUSH_KEY',
+  'ANDROID_CODEPUSH_KEY',
+  'GOOGLE_MAPS_KEY',
+  'API_ENV',
+];
+
+const getEnv = (key, prefix = '') =>
+  process.env[`${prefix}${key}`] || process.env[`${key}`];
+
+const buildEnv = (keys, prefix) =>
+  keys.reduce((env, key) => {
+    const value = getEnv(key, prefix);
+    if (!prefix) {
+      throw `ENV required. Must be one of ${validEnvs}`;
+    }
+
+    if (!validPrefixes.includes(prefix)) {
+      throw `Invalid prefix. Must be one of ${validEnvs}}`;
+    }
+
+    if (!value) {
+      throw 'Missing Configuration Value';
+    }
+    return {
+      ...env,
+      [key]: value,
+    };
+  }, {});
+
+const getPrefix = () => {
+  switch (process.env.BUILD_ENV) {
+    case 'production':
+      return 'PROD_';
+    case 'uat':
+      return 'UAT_';
+    case 'sit':
+      return 'SIT_';
+    case 'dev':
+      return 'DEV_';
+    default:
+      return null;
+  }
+};
+
+const prefix = getPrefix();
+const env = buildEnv(envKeys, prefix);
+
+//copy the json inside the env.json file
+fs.writeFileSync('app.config.json', JSON.stringify(env, undefined, 2));

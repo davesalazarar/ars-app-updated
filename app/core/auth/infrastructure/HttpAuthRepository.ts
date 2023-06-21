@@ -1,23 +1,24 @@
-// import axios from 'axios';
+import axios from 'axios';
+import {HOST} from '@/core/shared/domain/Constants';
 import {injectable} from 'inversify';
-import {LoginResponse} from '../application/LoginResponse';
-import {AuthRepository} from '../domain/AuthRepossitory';
-
+import {AuthRepository} from '@/core/auth/domain/AuthRepossitory';
+import {
+  AxiosRequestconfiguration,
+  axiosResponseConfiguration,
+} from '@/core/shared/infrastructure/AxiosInterceptors';
 @injectable()
 export class HttpAuthRepository implements AuthRepository {
-  login(account: string, password: string): Promise<LoginResponse> {
-    return new Promise(() => {
-      return {
-        name: account,
-        token: password,
-        id: 'esto se ha ejecutado bien',
-      };
-    });
-    // return axios({
-    //   method: 'post',
-    //   url: '',
-    //   data: {account, password},
-    //   withCredentials: true,
-    // });
+  login(account: string, password: string): Promise<any> {
+    const instance = axios.create();
+    instance.interceptors.request.use(AxiosRequestconfiguration);
+    instance.interceptors.response.use(axiosResponseConfiguration);
+    const data = instance.post(
+      `${HOST}/app/auth/login`,
+      {account, password},
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
   }
 }
