@@ -1,11 +1,7 @@
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {HOST, versionCode} from '@/core/shared/domain/Constants';
-import {
-  InvalidAppVersionError,
-  InvalidCredentialsError,
-  InvalidTokenError,
-} from '../domain/Errors';
+import {HOST, versionCode} from '@/core/shared/infrastructure/Constants';
+import {InvalidAppVersionError, InvalidTokenError} from '../domain/Errors';
 
 const systemName = DeviceInfo.getSystemName();
 const systemVersion = DeviceInfo.getSystemVersion();
@@ -38,9 +34,6 @@ export const AxiosRequestconfiguration = async (config: any) => {
   return config;
 };
 export const axiosResponseConfiguration = async (res: any) => {
-  if (!res.data) {
-    throw new InvalidCredentialsError();
-  }
   if (res.data && res.data.code) {
     const statusCode = res.data.code;
     ErrorValidator(statusCode);

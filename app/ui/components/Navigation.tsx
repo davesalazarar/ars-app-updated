@@ -25,7 +25,7 @@ import SupportCenterScreen from '@/ui/screens/SupportCenter';
 import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage';
 import SettingsScreen from '@/ui/screens/Settings';
 import ResourcesScreen from '@/ui/screens/Resources';
-import Login from '@/ui/screens/Login';
+import Login from '@/ui/screens/Login/Login';
 
 const Tab = createBottomTabNavigator();
 

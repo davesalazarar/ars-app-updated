@@ -12,6 +12,6 @@ export class LoginUseCase {
   }
 
   async login(account: string, password: string): Promise<LoginResponse> {
-    return this._repository.login(account, password);
+    return await this._repository.login(account, password);
   }
 }

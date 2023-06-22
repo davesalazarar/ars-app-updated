@@ -4,21 +4,21 @@ import {Container} from 'inversify';
 import {SharedLocator} from './domain/SharedLocator';
 import {AsyncStorageGeneralStorageRepository} from './infrastructure/AsyncStorageGeneralStorageRepository';
 import {GeneralStorageRepository} from './domain/GeneralStorageRepository';
-import {LoadGeneralStorageValueUseCase} from './application/LoadGeneralStorageValueUseCase';
-import {SaveGeneralStorageValueUseCase} from './application/SaveGeneralStorageValueUseCase';
+import {LoadGeneralStorageValueUseCase} from './application/general-value/LoadGeneralStorageValueUseCase';
+import {SaveGeneralStorageValueUseCase} from './application/general-value/SaveGeneralStorageValueUseCase';
 
-const AuthContainer = new Container();
+const SharedContainer = new Container();
 
-AuthContainer.bind<SaveGeneralStorageValueUseCase>(
+SharedContainer.bind<SaveGeneralStorageValueUseCase>(
   SharedLocator.SaveGeneralStorageValueUseCase,
 ).to(SaveGeneralStorageValueUseCase);
 
-AuthContainer.bind<LoadGeneralStorageValueUseCase>(
+SharedContainer.bind<LoadGeneralStorageValueUseCase>(
   SharedLocator.LoadGeneralStorageValueUseCase,
 ).to(LoadGeneralStorageValueUseCase);
 
-AuthContainer.bind<GeneralStorageRepository>(
+SharedContainer.bind<GeneralStorageRepository>(
   SharedLocator.GeneralStorageRepository,
 ).to(AsyncStorageGeneralStorageRepository);
 
-export {AuthContainer};
+export {SharedContainer};

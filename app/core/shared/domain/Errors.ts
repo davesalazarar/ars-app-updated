@@ -1,25 +1,25 @@
-export abstract class Error {
-  private _code: string;
-  private _message: string;
-  constructor(private code: string, message: string) {
-    this._code = code;
-    this._message = message;
+export abstract class DomainError {
+  readonly code: string;
+  readonly message: string;
+  constructor(_code: string, _message: string) {
+    this.code = _code;
+    this.message = _message;
   }
 }
 
-export class InvalidTokenError extends Error {
+export class InvalidTokenError extends DomainError {
   constructor() {
     super('invalid_token_error', 'The token is invalid');
   }
 }
 
-export class InvalidCredentialsError extends Error {
-  constructor() {
-    super('invalid_credentials_error', "Account & Password doesn't match!");
+export class InvalidCredentialsError extends DomainError {
+  constructor(message: string) {
+    super('invalid_credentials_error', message);
   }
 }
 
-export class InvalidAppVersionError extends Error {
+export class InvalidAppVersionError extends DomainError {
   constructor() {
     super(
       'invalid_app_version_error',
