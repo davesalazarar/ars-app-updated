@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: px2dp(50),
     height: screenH,
     flexDirection: 'column',
+    backgroundColor: 'white',
   },
   login_img_container: {
     marginTop: scaleHeight(230), //230

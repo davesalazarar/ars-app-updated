@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import {CheckBox} from 'react-native-elements';
-import {scaleHeight, setSpText} from '@/ui/utils/screenUtil';
+import {scaleHeight} from '@/ui/utils/screenUtil';
 import CustomInput from '@/ui/components/CustomInput';
 import CustomButton from '@/ui/components/CustomButton';
 import {AuthContainer} from '@/core/auth/authContainer';
@@ -10,35 +9,25 @@ import {LoginUseCase} from '@/core/auth/application/LoginUseCase';
 import {InvalidCredentialsError} from '@/core/shared/domain/Errors';
 import Toast from 'react-native-root-toast';
 import {useState} from 'react';
-import {SharedLocator} from '@/core/shared/domain/SharedLocator';
-import {SharedContainer} from '@/core/shared/sharedContainer';
-import {LoadUserValueUseCase} from '@/core/shared/application/user/LoadUserValueUseCase';
 import {styles} from './Styles';
 
 const logo = require('@/assets/logo.png');
 
-export default function Login() {
+export default function Login({navigation}: any) {
   const [username, setUsername] = useState('');
   const [pwd, setPwd] = useState('');
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const storage = SharedContainer.get<LoadUserValueUseCase>(
-        SharedLocator.LoadGeneralStorageValueUseCase,
-      );
-      const data = await storage.load();
-      if (data !== null) {
-        setUsername(data.username);
-        setPwd(data.password);
-      }
-    };
-    fetchData();
-  }, []);
   const toLogin = async () => {
     try {
-      const usecase = AuthContainer.get<LoginUseCase>(AuthLocator.LoginUseCase);
-      const data = await usecase.login(username, pwd);
-      console.log(data);
+      console.log(username, pwd);
+      if (!username || !pwd) {
+        Toast.show('please input email or password!');
+      } else {
+        const usecase = AuthContainer.get<LoginUseCase>(
+          AuthLocator.LoginUseCase,
+        );
+        await usecase.login(username, pwd);
+      }
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {
         Toast.show(error.message);
@@ -66,30 +55,6 @@ export default function Login() {
           placeholder="Enter Your Password"
           onChangeText={(text: string) => setPwd(text)}
         />
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-          }}>
-          <CheckBox
-            title="Remember Me"
-            containerStyle={{
-              backgroundColor: 'white',
-              borderColor: 'white',
-              marginLeft: 0,
-              paddingLeft: 0,
-            }}
-            textStyle={{
-              fontSize: setSpText(26),
-              color: 'rgba(51,51,51,1)',
-              fontWeight: '300',
-            }}
-            iconType="material-community"
-            checkedIcon="check-circle"
-            uncheckedIcon="circle-o"
-            checkedColor="#2D8DBC"
-          />
-        </View>
         <CustomButton
           linearGradientProps={{
             start: {x: 0, y: 0.5},
@@ -106,7 +71,11 @@ export default function Login() {
           asyncPress={toLogin}
         />
         <TouchableOpacity>
-          <Text style={styles.forget}>Forgot Password?</Text>
+          <Text
+            style={styles.forget}
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            Forgot Password?
+          </Text>
         </TouchableOpacity>
         <View style={styles.bottom}>
           <View style={[styles.textcontainer]}>

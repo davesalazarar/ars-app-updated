@@ -17,6 +17,7 @@ export class LoadUserValueUseCase {
 
   async load(): Promise<User | null> {
     const data = await this._repository.load(StorageKeys.USER);
+    console.log(data);
     if (!data) {
       return new Promise(() => null);
     }

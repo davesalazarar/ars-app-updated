@@ -11,5 +11,4 @@ AuthContainer.bind<LoginUseCase>(AuthLocator.LoginUseCase).to(LoginUseCase);
 AuthContainer.bind<AuthRepository>(AuthLocator.AuthRepository).to(
   HttpAuthRepository,
 );
-
 export {AuthContainer};

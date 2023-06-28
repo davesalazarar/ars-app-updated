@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Input, Icon} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import {setSpText} from '@/ui/utils/screenUtil';
+import {Icon, Input} from '@rneui/base';
 
 export default function CustomInput(props: any) {
   const {

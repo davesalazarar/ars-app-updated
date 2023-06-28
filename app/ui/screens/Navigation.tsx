@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
 import AvailabilityScreen from '@/ui/screens/Availability';
 import WorkOrdersScreen from '@/ui/screens/WorkOrders';
 import {
@@ -16,7 +15,7 @@ import {
   SettingsIcon,
   SupportIcon,
   WorkOrdersIcon,
-} from './Icons';
+} from '../components/Icons';
 import HomeScreen from '@/ui/screens/Home';
 import PaymentsScreen from '@/ui/screens/Payments';
 import WOHistoryScreen from '@/ui/screens/WOHistory';
@@ -25,7 +24,8 @@ import SupportCenterScreen from '@/ui/screens/SupportCenter';
 import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage';
 import SettingsScreen from '@/ui/screens/Settings';
 import ResourcesScreen from '@/ui/screens/Resources';
-import Login from '@/ui/screens/Login/Login';
+import {Provider} from 'react-redux';
+import {appStore} from '@/ui/redux/store';
 
 const Tab = createBottomTabNavigator();
 
@@ -112,9 +112,8 @@ const SideBar = () => {
 };
 export default function Navigation() {
   return (
-    <Login></Login>
-    // <NavigationContainer>
-    //   <BottomTabs />
-    // </NavigationContainer>
+    <Provider store={appStore}>
+      <BottomTabs />
+    </Provider>
   );
 }

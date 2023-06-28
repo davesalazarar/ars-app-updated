@@ -1,7 +1,6 @@
 import {inject, injectable} from 'inversify';
 import {AuthLocator} from '../domain/AuthLocator';
 import {AuthRepository} from '../domain/AuthRepossitory';
-import {LoginResponse} from '../domain/LoginResponse';
 
 @injectable()
 export class LoginUseCase {
@@ -11,7 +10,7 @@ export class LoginUseCase {
     this._repository = repository;
   }
 
-  async login(account: string, password: string): Promise<LoginResponse> {
-    return await this._repository.login(account, password);
+  async login(account: string, password: string): Promise<void> {
+    await this._repository.login(account, password);
   }
 }
