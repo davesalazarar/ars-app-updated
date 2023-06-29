@@ -1,5 +1,5 @@
-import {LoginResponse} from 'core/auth/domain/LoginResponse';
+import {User} from 'core/shared/domain/User';
 
 export interface AuthRepository {
-  login(account: string, password: string): Promise<LoginResponse>;
+  login(account: string, password: string): Promise<User>;
 }

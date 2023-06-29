@@ -10,23 +10,25 @@ import {InvalidCredentialsError} from '@/core/shared/domain/Errors';
 import Toast from 'react-native-root-toast';
 import {useState} from 'react';
 import {styles} from './Styles';
+import {useUser} from '@/ui/hooks/user';
 
 const logo = require('@/assets/logo.png');
 
 export default function Login({navigation}: any) {
+  const {saveUser} = useUser();
   const [username, setUsername] = useState('');
   const [pwd, setPwd] = useState('');
 
-  const toLogin = async () => {
+  const SignIn = async () => {
     try {
-      console.log(username, pwd);
       if (!username || !pwd) {
-        Toast.show('please input email or password!');
+        Toast.show('Please input email or password!');
       } else {
         const usecase = AuthContainer.get<LoginUseCase>(
           AuthLocator.LoginUseCase,
         );
-        await usecase.login(username, pwd);
+        const data = await usecase.login(username, pwd);
+        await saveUser(data);
       }
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {
@@ -34,6 +36,7 @@ export default function Login({navigation}: any) {
       }
     }
   };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -68,7 +71,7 @@ export default function Login({navigation}: any) {
           title="SIGN IN"
           titleStyle={styles.login_btn_text}
           children={undefined}
-          asyncPress={toLogin}
+          asyncPress={SignIn}
         />
         <TouchableOpacity>
           <Text

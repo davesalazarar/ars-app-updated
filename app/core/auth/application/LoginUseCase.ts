@@ -1,3 +1,4 @@
+import {User} from 'core/shared/domain/User';
 import {inject, injectable} from 'inversify';
 import {AuthLocator} from '../domain/AuthLocator';
 import {AuthRepository} from '../domain/AuthRepossitory';
@@ -10,7 +11,7 @@ export class LoginUseCase {
     this._repository = repository;
   }
 
-  async login(account: string, password: string): Promise<void> {
-    await this._repository.login(account, password);
+  async login(account: string, password: string): Promise<User> {
+    return await this._repository.login(account, password);
   }
 }

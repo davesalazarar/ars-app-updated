@@ -5,7 +5,7 @@ import {User} from '@/core/shared/domain/User';
 import {inject, injectable} from 'inversify';
 
 @injectable()
-export class SaveGeneralStorageValueUseCase {
+export class SaveUserValueUseCase {
   private _repository: GeneralStorageRepository;
 
   constructor(

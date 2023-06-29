@@ -7,10 +7,13 @@ import {
   axiosResponseConfiguration,
 } from '@/core/shared/infrastructure/AxiosInterceptors';
 import {InvalidCredentialsError} from '@/core/shared/domain/Errors';
-import {LoginResponse} from '../domain/LoginResponse';
+import {User} from '@/core/shared/domain/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StorageKeys} from '@/core/shared/domain/StorageKeys';
+
 @injectable()
 export class HttpAuthRepository implements AuthRepository {
-  async login(account: string, password: string): Promise<LoginResponse> {
+  async login(account: string, password: string): Promise<User> {
     const instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
     instance.interceptors.response.use(axiosResponseConfiguration);
@@ -21,9 +24,19 @@ export class HttpAuthRepository implements AuthRepository {
         withCredentials: true,
       },
     );
-    if (!data.data.data) {
+    const user = data.data.data;
+    if (!user) {
       throw new InvalidCredentialsError(data.data.msg);
     }
-    return data.data;
+    await this.saveToken(user.token);
+    return new User(user.id, user.name, account, user.firstLogin);
+  }
+
+  async saveToken(value: string): Promise<void> {
+    try {
+      await AsyncStorage.setItem(StorageKeys.TOKEN, value);
+    } catch (e: any) {
+      throw new Error(e);
+    }
   }
 }

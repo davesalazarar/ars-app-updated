@@ -15,13 +15,12 @@ export class LoadUserValueUseCase {
     this._repository = repository;
   }
 
-  async load(): Promise<User | null> {
+  async load(): Promise<User> {
     const data = await this._repository.load(StorageKeys.USER);
-    console.log(data);
     if (!data) {
       return new Promise(() => null);
     }
     const user = JSON.parse(data) as User;
-    return new Promise(() => user);
+    return new Promise(resolve => resolve(user));
   }
 }
