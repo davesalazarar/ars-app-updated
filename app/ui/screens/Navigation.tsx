@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import AvailabilityScreen from '@/ui/screens/Availability';
 import WorkOrdersScreen from '@/ui/screens/WorkOrders';
 import {
-  AvailabilityIcon,
   ChatIcon,
   HistoryIcon,
   HomeIcon,
@@ -16,7 +14,7 @@ import {
   SupportIcon,
   WorkOrdersIcon,
 } from '../components/Icons';
-import HomeScreen from '@/ui/screens/Home';
+import HomeScreen from '@/ui/screens/Home/Home';
 import PaymentsScreen from '@/ui/screens/Payments';
 import WOHistoryScreen from '@/ui/screens/WOHistory';
 import CommunicationScreen from '@/ui/screens/Communication';
@@ -37,13 +35,6 @@ const BottomTabs = () => {
         component={SideBar}
         options={{
           tabBarIcon: HomeTabIcon,
-        }}
-      />
-      <Tab.Screen
-        name="Availability"
-        component={AvailabilityScreen}
-        options={{
-          tabBarIcon: AvailabilityIcon,
         }}
       />
       <Tab.Screen
