@@ -14,7 +14,7 @@ import {StorageKeys} from '@/core/shared/domain/StorageKeys';
 @injectable()
 export class HttpAuthRepository implements AuthRepository {
   async login(account: string, password: string): Promise<User> {
-    const instance = axios.create();
+    let instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
     instance.interceptors.response.use(axiosResponseConfiguration);
     const data = await instance.post(
@@ -29,7 +29,7 @@ export class HttpAuthRepository implements AuthRepository {
       throw new InvalidCredentialsError(data.data.msg);
     }
     await this.saveToken(user.token);
-    return new User(user.id, user.name, account, user.firstLogin);
+    return new User(user.id, user.name, account, user.firstLogin, false, false);
   }
 
   async saveToken(value: string): Promise<void> {

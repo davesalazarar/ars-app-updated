@@ -1,24 +1,27 @@
 import {CheckBox} from '@rneui/base';
 import * as React from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import CustomButton from '@/ui/components/CustomButton';
 import {useUser} from '@/ui/hooks/user';
-import {scaleHeight} from '@/ui/utils/screenUtil';
 import {styles} from './Styles';
+import {CustomRoundedButton} from './Components/CustomRoundedButton';
+import {Icon} from '@rneui/themed';
 
 export default function HomeScreen() {
   const {user} = useUser();
+  const currentAddress = '';
   const isCheckIn = true;
   const isAcceptingWOs = true;
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        display: 'flex',
-      }}>
+    <SafeAreaView style={styles.safeAareaStyle}>
       <ScrollView
-        contentContainerStyle={{flex: 1}}
+        contentContainerStyle={styles.containerStyle}
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={this._onRefresh} />
         // }
@@ -38,15 +41,14 @@ export default function HomeScreen() {
                       Hi, {user?.username}
                     </Text>
                   </View>
-                  {/* {isCheckIn ? (
+                  {isCheckIn ? (
                     <TouchableOpacity
-                      style={styles.homeHeader_content_location}
-                      onPress={customLocation.updateCurrentPosition}>
+                      style={styles.homeHeader_content_location}>
                       <Icon
                         name="enviromento"
                         type="antdesign"
-                        colors="rgba(255,255,255,1)"
-                        iconStyle={iconStyle}
+                        color="rgba(255,255,255,1)"
+                        iconStyle={styles.iconStyle}
                       />
                       <Text
                         style={styles.homeHeader_content_location_text}
@@ -56,43 +58,14 @@ export default function HomeScreen() {
                           : 'Gathering position...'}
                       </Text>
                     </TouchableOpacity>
-                  ) : null} */}
+                  ) : null}
                 </View>
               </View>
             </LinearGradient>
 
             <View style={styles.homeOrder}>
               <View style={styles.duty_container}>
-                <CustomButton
-                  linearGradientProps={{
-                    colors: isCheckIn
-                      ? ['#CCCCCC', '#CCCCCC']
-                      : ['#189DC4', '#1DC7CF'],
-                    start: {x: 0, y: 0.5},
-                    end: {x: 1, y: 0.5},
-                  }}
-                  titleRender={
-                    <View style={styles.duty_button_to}>
-                      <Text style={[styles.duty_button_text]}>Go</Text>
-                      <Text
-                        style={[
-                          styles.duty_button_text,
-                          {marginTop: scaleHeight(20), fontWeight: '500'},
-                        ]}>
-                        {isCheckIn ? 'OFF-DUTY' : 'ON-DUTY'}
-                      </Text>
-                    </View>
-                  }
-                  containerStyle={styles.duty_button}
-                  buttonStyle={styles.duty_button_to}
-                  disabledShadow={true}
-                  throttle
-                  throttleOptions={{
-                    wait: 1000,
-                  }}
-                  children={undefined}
-                />
-
+                <CustomRoundedButton isCheckIn={isCheckIn} />
                 {isCheckIn ? (
                   <View style={styles.duty_tip}>
                     <CheckBox

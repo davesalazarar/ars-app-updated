@@ -24,6 +24,7 @@ import SettingsScreen from '@/ui/screens/Settings';
 import ResourcesScreen from '@/ui/screens/Resources';
 import {Provider} from 'react-redux';
 import {appStore} from '@/ui/redux/store';
+import StatusLabel from './Home/Components/StatusHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +58,13 @@ const SideBar = () => {
       screenOptions={{
         headerTitleAlign: 'center',
         drawerPosition: 'right',
+        headerTitle: () => (
+          <StatusLabel
+            isAcceptingWOs={false}
+            isCheckIn={false}
+            locationUpdateSuccess={false}
+          />
+        ),
       }}>
       <Drawer.Screen
         name="Home"

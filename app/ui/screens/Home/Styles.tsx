@@ -2,6 +2,14 @@ import {StyleSheet} from 'react-native';
 import {screenW, scaleHeight, setSpText, px2dp} from '@/ui/utils/screenUtil';
 
 export const styles = StyleSheet.create({
+  iconStyle: {
+    fontSize: setSpText(28),
+  },
+  containerStyle: {flex: 1},
+  safeAareaStyle: {
+    flex: 1,
+    display: 'flex',
+  },
   content: {
     flex: 1,
     width: '100%',

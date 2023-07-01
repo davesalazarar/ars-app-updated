@@ -17,6 +17,8 @@ export const userSlice = createSlice({
     id: 0,
     name: '',
     token: '',
+    onDuty: false,
+    isAcceptingWOs: false,
   },
   reducers: {
     saveUser: (state, action) => {

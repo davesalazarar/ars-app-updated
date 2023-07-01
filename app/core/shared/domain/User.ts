@@ -3,10 +3,21 @@ export class User {
   readonly username: string;
   readonly email: string;
   readonly firstLogin: number;
-  constructor(id: number, username: string, email: string, firstLogin: number) {
+  readonly onDuty: boolean;
+  readonly isAcceptingWOs: boolean;
+  constructor(
+    id: number,
+    username: string,
+    email: string,
+    firstLogin: number,
+    onDuty: boolean,
+    isAcceptingWOs: boolean,
+  ) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.firstLogin = firstLogin;
+    this.onDuty = onDuty;
+    this.isAcceptingWOs = isAcceptingWOs;
   }
 }
