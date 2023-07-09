@@ -13,6 +13,14 @@ export class InvalidTokenError extends DomainError {
   }
 }
 
+export class LocationServiceError extends DomainError {
+  constructor() {
+    super(
+      'location_service_error',
+      'There is a problem with the location service',
+    );
+  }
+}
 export class InvalidCredentialsError extends DomainError {
   constructor(message: string) {
     super('invalid_credentials_error', message);

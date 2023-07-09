@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import ForgotPasswordScreen from '@/ui/screens/Auth/ForgotPassword/ForgotPassword';
 import Login from './Login/Login';

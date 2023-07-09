@@ -6,8 +6,10 @@ import {SaveUserValueUseCase} from 'core/shared/application/user/SaveUserValueUs
 import {useState, useEffect} from 'react';
 
 export const useUser = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>(User.Empty);
+  const [isLoading, setIsLoading] = useState(true);
   const getUser = async () => {
+    setIsLoading(true);
     const usecase = SharedContainer.get<LoadUserValueUseCase>(
       SharedLocator.LoadUserValueUseCase,
     );
@@ -15,6 +17,7 @@ export const useUser = () => {
     setUser(data);
   };
   const saveUser = async (data: User) => {
+    setIsLoading(true);
     const usecase = SharedContainer.get<SaveUserValueUseCase>(
       SharedLocator.SaveUserValueUseCase,
     );
@@ -23,6 +26,7 @@ export const useUser = () => {
   };
   useEffect(() => {
     getUser();
-  }, []);
-  return {user, saveUser};
+    setIsLoading(false);
+  }, [isLoading]);
+  return {user, isLoading, saveUser};
 };

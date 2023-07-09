@@ -5,13 +5,15 @@ import {scaleHeight} from '@/ui/utils/screenUtil';
 import {styles} from '../Styles';
 
 interface CustomRoundedButtonProps {
-  isCheckIn: boolean;
+  onDutyHandle: () => void;
+  isOnDuty: boolean;
 }
 export const CustomRoundedButton = (props: CustomRoundedButtonProps) => {
   return (
     <CustomButton
+      onPress={props.onDutyHandle}
       linearGradientProps={{
-        colors: props.isCheckIn
+        colors: props.isOnDuty
           ? ['#CCCCCC', '#CCCCCC']
           : ['#189DC4', '#1DC7CF'],
         start: {x: 0, y: 0.5},
@@ -25,7 +27,7 @@ export const CustomRoundedButton = (props: CustomRoundedButtonProps) => {
               styles.duty_button_text,
               {marginTop: scaleHeight(20), fontWeight: '500'},
             ]}>
-            {props.isCheckIn ? 'OFF-DUTY' : 'ON-DUTY'}
+            {props.isOnDuty ? 'OFF-DUTY' : 'ON-DUTY'}
           </Text>
         </View>
       }

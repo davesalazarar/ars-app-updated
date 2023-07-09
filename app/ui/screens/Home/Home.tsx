@@ -16,8 +16,8 @@ import {Icon} from '@rneui/themed';
 export default function HomeScreen() {
   const {user} = useUser();
   const currentAddress = '';
-  const isCheckIn = true;
-  const isAcceptingWOs = true;
+  const isOnDuty = user.onDuty;
+  const isAcceptingWOs = user.isAcceptingWOs;
   return (
     <SafeAreaView style={styles.safeAareaStyle}>
       <ScrollView
@@ -41,7 +41,7 @@ export default function HomeScreen() {
                       Hi, {user?.username}
                     </Text>
                   </View>
-                  {isCheckIn ? (
+                  {isOnDuty ? (
                     <TouchableOpacity
                       style={styles.homeHeader_content_location}>
                       <Icon
@@ -65,8 +65,11 @@ export default function HomeScreen() {
 
             <View style={styles.homeOrder}>
               <View style={styles.duty_container}>
-                <CustomRoundedButton isCheckIn={isCheckIn} />
-                {isCheckIn ? (
+                <CustomRoundedButton
+                  onDutyHandle={() => {}}
+                  isOnDuty={isOnDuty}
+                />
+                {isOnDuty ? (
                   <View style={styles.duty_tip}>
                     <CheckBox
                       title="On-Duty & Receiving new work orders"

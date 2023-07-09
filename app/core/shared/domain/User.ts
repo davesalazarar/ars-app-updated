@@ -20,4 +20,7 @@ export class User {
     this.onDuty = onDuty;
     this.isAcceptingWOs = isAcceptingWOs;
   }
+  static Empty() {
+    return new User(0, '', '', 0, false, false);
+  }
 }
