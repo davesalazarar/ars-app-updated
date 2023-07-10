@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Text} from '@rneui/themed';
 import {scaleHeight, screenW, px2dp, setSpText} from '@/ui/utils/screenUtil';
+import {useUser} from '@/ui/hooks/user';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,15 +54,12 @@ const styles = StyleSheet.create({
   chat: {},
 });
 
-interface StatusLabelProps {
-  isCheckIn: boolean;
-  isAcceptingWOs: boolean;
-  locationUpdateSuccess: boolean;
-}
-const StatusLabel = (props: StatusLabelProps) => {
-  const {isCheckIn, isAcceptingWOs, locationUpdateSuccess} = props;
+const StatusLabel = () => {
+  const {user} = useUser();
 
-  if (isCheckIn) {
+  const {onDuty, isAcceptingWOs, locationUpdateSuccess} = user;
+
+  if (onDuty) {
     if (!locationUpdateSuccess) {
       return (
         <>

@@ -4,12 +4,14 @@ import {SharedContainer} from '@/core/shared/sharedContainer';
 import {SaveUserValueUseCase} from '@/core/shared/application/user/SaveUserValueUseCase';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {resetUser, saveUser} from '@/ui/redux/states/user';
+import {offDuty, onDuty, resetUser, saveUser} from '@/ui/redux/states/user';
+import {useLocation} from './location';
 
 export const useUser = () => {
   const user = useSelector((state: any) => state.user);
   const dispatcher = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const {watchPosition, clearWatch} = useLocation();
 
   const storeUser = async (data: any) => {
     setIsLoading(true);
@@ -21,9 +23,22 @@ export const useUser = () => {
     dispatcher(saveUser(JSON.parse(strData)));
     setIsLoading(false);
   };
+
   const clearUser = () => {
     dispatcher(resetUser());
   };
+
+  const toggleDuty = () => {
+    console.log('toggling duty');
+    if (!user.onDuty) {
+      watchPosition();
+      dispatcher(onDuty());
+    } else {
+      clearWatch();
+      dispatcher(offDuty());
+    }
+  };
+
   useEffect(() => {
     const loadUser = async () => {
       setIsLoading(true);
@@ -42,5 +57,5 @@ export const useUser = () => {
     };
     loadUser();
   }, [dispatcher, user]);
-  return {user, isLoading, storeUser, clearUser};
+  return {user, isLoading, storeUser, clearUser, toggleDuty};
 };

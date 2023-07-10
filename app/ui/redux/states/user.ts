@@ -26,6 +26,14 @@ export const userSlice = createSlice({
       console.log('saved data: ', action.payload);
       return {...state, ...action.payload};
     },
+    onDuty: state => {
+      console.log('on duty redux');
+      return {...state, onDuty: true, isAcceptingWOs: true};
+    },
+    offDuty: state => {
+      console.log('off duty redux');
+      return {...state, onDuty: false, isAcceptingWOs: false};
+    },
     resetUser: () => {
       return {
         email: '',
@@ -40,4 +48,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const {saveUser, resetUser} = userSlice.actions;
+export const {saveUser, resetUser, onDuty, offDuty} = userSlice.actions;

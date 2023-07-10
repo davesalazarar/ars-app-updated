@@ -14,7 +14,7 @@ import {CustomRoundedButton} from './Components/CustomRoundedButton';
 import {Icon} from '@rneui/themed';
 
 export default function HomeScreen() {
-  const {user} = useUser();
+  const {user, toggleDuty} = useUser();
   const currentAddress = '';
   const isOnDuty = user.onDuty;
   const isAcceptingWOs = user.isAcceptingWOs;
@@ -66,7 +66,7 @@ export default function HomeScreen() {
             <View style={styles.homeOrder}>
               <View style={styles.duty_container}>
                 <CustomRoundedButton
-                  onDutyHandle={() => {}}
+                  onDutyHandle={toggleDuty}
                   isOnDuty={isOnDuty}
                 />
                 {isOnDuty ? (

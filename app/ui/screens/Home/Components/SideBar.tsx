@@ -77,13 +77,7 @@ export const SideBar = () => {
       screenOptions={{
         headerTitleAlign: 'center',
         drawerPosition: 'right',
-        headerTitle: () => (
-          <StatusLabel
-            isAcceptingWOs={false}
-            isCheckIn={false}
-            locationUpdateSuccess={false}
-          />
-        ),
+        headerTitle: () => <StatusLabel />,
       }}>
       <Drawer.Screen
         name="HomeScreen"

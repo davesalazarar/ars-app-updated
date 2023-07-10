@@ -1,18 +1,40 @@
 import Geolocation from '@react-native-community/geolocation';
+import {GetCurrentAddressUseCase} from '@/core/location/application/GetCurrentAddressUseCase';
+import {LocationLocator} from '@/core/location/domain/LocationLocator';
+import {LocationContainer} from '@/core/location/locationContainer';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import Toast from 'react-native-root-toast';
+
+interface Position {
+  latitude: number;
+  longitude: number;
+}
 
 export const useLocation = () => {
-  const [position, setPosition] = useState<string | null>(null);
+  const [position, setPosition] = useState<Position | null>(null);
   const [subscriptionId, setSubscriptionId] = useState<number | null>(null);
-
+  const getAddress = async () => {
+    const usecase = LocationContainer.get<GetCurrentAddressUseCase>(
+      LocationLocator.GetCurrentAddressUseCase,
+    );
+    if (position) {
+      const data = await usecase.getCurrentAddress(
+        position.latitude.toString(),
+        position.longitude.toString(),
+      );
+      console.log('data from backend', data);
+    }
+  };
   const watchPosition = () => {
     try {
       const watchID = Geolocation.watchPosition(
-        p => {
-          Toast.show(JSON.stringify(p));
-          setPosition(JSON.stringify(p));
+        async p => {
+          setPosition({
+            latitude: p.coords.latitude,
+            longitude: p.coords.longitude,
+          });
+          console.log(p);
+          await getAddress();
         },
         error => Alert.alert('WatchPosition Error', JSON.stringify(error)),
         {
@@ -32,14 +54,7 @@ export const useLocation = () => {
     console.log('watch cleared');
   };
 
-  useEffect(() => {
-    return () => {
-      watchPosition();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => {}, [position]);
 
   return {position, watchPosition, clearWatch};
 };
-
-export const useAddress = () => {};
