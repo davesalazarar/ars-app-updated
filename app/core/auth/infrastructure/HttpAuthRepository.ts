@@ -33,7 +33,15 @@ export class HttpAuthRepository implements AuthRepository {
       throw new InvalidCredentialsError(data.data.msg);
     }
     await this.saveToken(user.token);
-    return new User(user.id, user.name, account, user.firstLogin, false, false);
+    return new User(
+      user.id,
+      user.name,
+      account,
+      user.firstLogin,
+      false,
+      false,
+      true,
+    );
   }
 
   async saveToken(value: string): Promise<void> {
@@ -46,7 +54,6 @@ export class HttpAuthRepository implements AuthRepository {
 
   async deleteToken(): Promise<void> {
     try {
-      const keys = [StorageKeys.TOKEN];
       await AsyncStorage.clear();
     } catch (e: any) {
       throw new Error(e);

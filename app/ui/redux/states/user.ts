@@ -13,26 +13,28 @@ export const getStoredUser = async () => {
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
+    email: '',
     firstLogin: 0,
     id: 0,
-    name: '',
-    token: '',
+    username: '',
     onDuty: false,
     isAcceptingWOs: false,
+    isLoggedIn: false,
   },
   reducers: {
     saveUser: (state, action) => {
       console.log('saved data: ', action.payload);
       return {...state, ...action.payload};
     },
-    resetUser: state => {
-      state = {
+    resetUser: () => {
+      return {
+        email: '',
         firstLogin: 0,
         id: 0,
-        name: '',
-        token: '',
+        username: '',
         onDuty: false,
         isAcceptingWOs: false,
+        isLoggedIn: false,
       };
     },
   },
