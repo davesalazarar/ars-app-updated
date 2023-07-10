@@ -1,23 +1,19 @@
-import {AddressResponse, AppLocation} from '@/core/location/domain/AppLocation';
+import {AppLocation} from '@/core/location/domain/AppLocation';
 import {LocationLocator} from '@/core/location/domain/LocationLocator';
-import {LocationRepository} from '@/core/location/domain/LocationRepository';
 import {inject, injectable} from 'inversify';
+import { LocationService } from '../domain/LocationService';
 
 @injectable()
-export class GetCurrentAddressUseCase {
-  private _repository: LocationRepository;
+export class EnableWatchLocationUseCase {
+  private _service: LocationService;
 
   constructor(
-    @inject(LocationLocator.LocationRepository) repository: LocationRepository,
+    @inject(LocationLocator.LocationService) service: LocationService,
   ) {
-    this._repository = repository;
+    this._service = service;
   }
 
-  async getCurrentAddress(
-    longitude: string,
-    latitude: string,
-  ): Promise<AddressResponse> {
-    const location: AppLocation = {longitude, latitude};
-    return await this._repository.getCurrentAddress(location);
+  async EnableWatchLocation(): Promise<void> {
+    return await this._service.enableWatchLocation();
   }
 }

@@ -255,7 +255,7 @@ export const styles = StyleSheet.create({
 
   logincontainer: {
     backgroundColor: 'rgba(255,255,255,1)',
-    width: screenW,
+    width: screenW - 100,
     height: scaleHeight(120),
     display: 'flex',
     flexDirection: 'row',
@@ -265,7 +265,7 @@ export const styles = StyleSheet.create({
     marginBottom: scaleHeight(40),
   },
   login_button: {
-    width: px2dp(690),
+    width: px2dp(500),
     height: scaleHeight(90),
     borderRadius: 45,
     justifyContent: 'center',

@@ -13,6 +13,10 @@ import {StorageKeys} from '@/core/shared/domain/StorageKeys';
 
 @injectable()
 export class HttpAuthRepository implements AuthRepository {
+  async logout(): Promise<void> {
+    await this.deleteToken();
+  }
+
   async login(account: string, password: string): Promise<User> {
     let instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
@@ -35,6 +39,15 @@ export class HttpAuthRepository implements AuthRepository {
   async saveToken(value: string): Promise<void> {
     try {
       await AsyncStorage.setItem(StorageKeys.TOKEN, value);
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async deleteToken(): Promise<void> {
+    try {
+      const keys = [StorageKeys.TOKEN];
+      await AsyncStorage.clear();
     } catch (e: any) {
       throw new Error(e);
     }

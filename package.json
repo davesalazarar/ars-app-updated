@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build:environment": "./bin/set-environment",
+    "build:environment": "node ./bin/set-environment",
+    "postinstall": "node ./bin/postinstall",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",

@@ -18,7 +18,7 @@ export class LoadUserValueUseCase {
   async load(): Promise<User> {
     const data = await this._repository.load(StorageKeys.USER);
     if (!data) {
-      return new Promise(() => null);
+      return new Promise(resolve => resolve(User.Empty()));
     }
     const user = JSON.parse(data) as User;
     return new Promise(resolve => resolve(user));

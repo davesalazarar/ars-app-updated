@@ -15,7 +15,7 @@ import {useUser} from '@/ui/hooks/user';
 const logo = require('@/assets/logo.png');
 
 export default function Login({navigation}: any) {
-  const {saveUser} = useUser();
+  const {storeUser} = useUser();
   const [username, setUsername] = useState('');
   const [pwd, setPwd] = useState('');
 
@@ -28,7 +28,7 @@ export default function Login({navigation}: any) {
           AuthLocator.LoginUseCase,
         );
         const data = await usecase.login(username, pwd);
-        await saveUser(data);
+        await storeUser(data);
       }
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {

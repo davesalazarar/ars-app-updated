@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {LoadUserValueUseCase} from '@/core/shared/application/user/LoadUserValueUseCase';
-import {SharedLocator} from '@/core/shared/domain/SharedLocator';
-import {SharedContainer} from '@/core/shared/sharedContainer';
+import {LoadUserValueUseCase} from 'core/shared/application/user/LoadUserValueUseCase';
+import {SharedLocator} from 'core/shared/domain/SharedLocator';
+import {SharedContainer} from 'core/shared/sharedContainer';
 
 export const getStoredUser = async () => {
   const usecase = SharedContainer.get<LoadUserValueUseCase>(
@@ -22,10 +22,18 @@ export const userSlice = createSlice({
   },
   reducers: {
     saveUser: (state, action) => {
+      console.log('saved data: ', action.payload);
       return {...state, ...action.payload};
     },
-    resetUser: (state, action) => {
-      return {...state, ...action.payload};
+    resetUser: state => {
+      state = {
+        firstLogin: 0,
+        id: 0,
+        name: '',
+        token: '',
+        onDuty: false,
+        isAcceptingWOs: false,
+      };
     },
   },
 });
