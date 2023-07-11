@@ -3,15 +3,15 @@ import React from 'react';
 import {useUser} from '@/ui/hooks/user';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthNavigation} from './Auth/AuthNavigation';
-import Navigation from './Navigation/Navigation';
 import {RootSiblingParent} from 'react-native-root-siblings';
+import {SideBar} from './Home/Components/SideBar';
 
 const AppNavigation = ({user}: any) => {
   return (
     <>
       {user.isLoggedIn ? (
         <>
-          <Navigation />
+          <SideBar />
         </>
       ) : (
         <>

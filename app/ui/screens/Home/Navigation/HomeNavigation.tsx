@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import WorkOrdersScreen from '@/ui/screens/WorkOrders';
+import WorkOrdersScreen from '@/ui/screens/work_orders/WorkOrders';
 import {HomeTabIcon, WorkOrdersIcon} from '@/ui/components/Icons';
 import {Provider} from 'react-redux';
 import {appStore} from '@/ui/redux/store';
-import {SideBar} from '@/ui/screens/Home/Components/SideBar';
+import HomeScreen from '../Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,7 +13,7 @@ const BottomTabs = () => {
     <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="Home"
-        component={SideBar}
+        component={HomeScreen}
         options={{
           tabBarIcon: HomeTabIcon,
         }}
@@ -29,7 +29,7 @@ const BottomTabs = () => {
   );
 };
 
-export default function Navigation() {
+export default function HomeNavigation() {
   return (
     <Provider store={appStore}>
       <BottomTabs />

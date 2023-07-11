@@ -24,13 +24,13 @@ import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage';
 import SettingsScreen from '@/ui/screens/Settings';
 import SupportCenterScreen from '@/ui/screens/SupportCenter';
 import WOHistoryScreen from '@/ui/screens/WOHistory';
-import HomeScreen from '../Home';
 import {styles} from '../Styles';
 import StatusLabel from './StatusHeader';
 import {LogoutUseCase} from '@/core/auth/application/LogoutUseCase';
 import {AuthContainer} from '@/core/auth/authContainer';
 import {AuthLocator} from '@/core/auth/domain/AuthLocator';
 import {useUser} from '@/ui/hooks/user';
+import HomeNavigation from '../Navigation/HomeNavigation';
 
 const DrawerContent = (props: any) => {
   const {clearUser} = useUser();
@@ -80,8 +80,8 @@ export const SideBar = () => {
         headerTitle: () => <StatusLabel />,
       }}>
       <Drawer.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="Home"
+        component={HomeNavigation}
         options={{drawerIcon: HomeIcon}}
       />
       <Drawer.Screen
