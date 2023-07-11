@@ -2,6 +2,8 @@ import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {HOST, versionCode} from '@/core/shared/infrastructure/Constants';
 import {InvalidAppVersionError, InvalidTokenError} from '../domain/Errors';
+import {StorageKeys} from '../domain/StorageKeys';
+import NetInfo from '@react-native-community/netinfo';
 
 const systemName = DeviceInfo.getSystemName();
 const systemVersion = DeviceInfo.getSystemVersion();
@@ -11,6 +13,7 @@ const brand = DeviceInfo.getBrand();
 
 export const AxiosRequestconfiguration = async (config: any) => {
   let url = config.url;
+  const netInfoData = await NetInfo.fetch();
   if (!url) {
     return config;
   }
@@ -22,10 +25,9 @@ export const AxiosRequestconfiguration = async (config: any) => {
   config.headers.device = device;
   config.headers.brand = brand;
   config.headers.versionCode = versionCode;
-  //   config.headers.netInfo = netInfo;
+  config.headers.netInfo = netInfoData.type;
 
-  const token = await AsyncStorage.getItem('accessToken');
-
+  const token = await AsyncStorage.getItem(StorageKeys.TOKEN);
   if (!token) {
     return config;
   }
@@ -34,6 +36,7 @@ export const AxiosRequestconfiguration = async (config: any) => {
   return config;
 };
 export const axiosResponseConfiguration = async (res: any) => {
+  console.log(res);
   if (res.data && res.data.code) {
     const statusCode = res.data.code;
     ErrorValidator(statusCode);

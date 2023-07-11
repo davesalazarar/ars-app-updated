@@ -21,6 +21,7 @@ export class HttpLocationRepository implements LocationRepository {
         withCredentials: true,
       },
     );
+    console.log(data.data);
     return data.data.data;
   }
 }

@@ -13,28 +13,28 @@ interface Position {
 export const useLocation = () => {
   const [position, setPosition] = useState<Position | null>(null);
   const [subscriptionId, setSubscriptionId] = useState<number | null>(null);
-  const getAddress = async () => {
-    const usecase = LocationContainer.get<GetCurrentAddressUseCase>(
-      LocationLocator.GetCurrentAddressUseCase,
-    );
-    if (position) {
-      const data = await usecase.getCurrentAddress(
-        position.latitude.toString(),
-        position.longitude.toString(),
-      );
-      console.log('data from backend', data);
-    }
-  };
+
   const watchPosition = () => {
     try {
       const watchID = Geolocation.watchPosition(
         async p => {
-          setPosition({
+          const coords: Position = {
             latitude: p.coords.latitude,
             longitude: p.coords.longitude,
-          });
-          console.log(p);
-          await getAddress();
+          };
+          setPosition(coords);
+          console.log(coords);
+          const usecase = LocationContainer.get<GetCurrentAddressUseCase>(
+            LocationLocator.GetCurrentAddressUseCase,
+          );
+          console.log('getting address', coords);
+          if (coords) {
+            const data = await usecase.getCurrentAddress(
+              coords.latitude.toString(),
+              coords.longitude.toString(),
+            );
+            console.log('data from backend', data);
+          }
         },
         error => Alert.alert('WatchPosition Error', JSON.stringify(error)),
         {
