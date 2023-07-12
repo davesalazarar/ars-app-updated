@@ -20,7 +20,6 @@ import {
 import CommunicationScreen from '@/ui/screens/Communication';
 import PaymentsScreen from '@/ui/screens/Payments';
 import ResourcesScreen from '@/ui/screens/Resources';
-import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage';
 import SettingsScreen from '@/ui/screens/Settings';
 import SupportCenterScreen from '@/ui/screens/SupportCenter';
 import WOHistoryScreen from '@/ui/screens/WOHistory';
@@ -31,6 +30,7 @@ import {AuthContainer} from '@/core/auth/authContainer';
 import {AuthLocator} from '@/core/auth/domain/AuthLocator';
 import {useUser} from '@/ui/hooks/user';
 import HomeNavigation from '../Navigation/HomeNavigation';
+import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage/ServiceCoverage';
 
 const DrawerContent = (props: any) => {
   const {clearUser} = useUser();
