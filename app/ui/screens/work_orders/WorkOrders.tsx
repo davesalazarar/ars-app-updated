@@ -1,27 +1,40 @@
 import * as React from 'react';
-import {useWindowDimensions, View} from 'react-native';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {useState} from 'react';
+import {useWindowDimensions} from 'react-native';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import BillingTab from './BillingTab';
+import WorkOrdersTab from './WorkOrdersTab';
 
-const FirstRoute = () => <View style={{flex: 1}} />;
-
-const SecondRoute = () => <View style={{flex: 1}} />;
 const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
+  wo: WorkOrdersTab,
+  billing: BillingTab,
 });
 
 export default function WorkOrdersScreen() {
   const layout = useWindowDimensions();
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'first', title: 'First'},
-    {key: 'second', title: 'Second'},
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    {key: 'wo', title: 'WORK ORDER'},
+    {key: 'billing', title: 'BILLING'},
   ]);
+
+  const renderTabBar = (props: any) => {
+    return (
+      <TabBar
+        tabStyle={{backgroundColor: 'white'}}
+        activeColor={'rgba(45,141,188,1)'}
+        inactiveColor={'#999999'}
+        {...props}
+      />
+    );
+  };
 
   return (
     <TabView
+      swipeEnabled={false}
       navigationState={{index, routes}}
+      renderTabBar={renderTabBar}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{width: layout.width}}

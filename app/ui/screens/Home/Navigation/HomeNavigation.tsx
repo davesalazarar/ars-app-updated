@@ -19,7 +19,7 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name="WorkOrders"
+        name="Work Orders"
         component={WorkOrdersScreen}
         options={{
           tabBarIcon: WorkOrdersIcon,
