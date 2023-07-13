@@ -14,8 +14,7 @@ import {CustomRoundedButton} from './Components/CustomRoundedButton';
 import {Icon} from '@rneui/themed';
 
 export default function HomeScreen() {
-  const {user, toggleDuty} = useUser();
-  const currentAddress = '';
+  const {user, location, toggleDuty} = useUser();
   const isOnDuty = user.onDuty;
   const isAcceptingWOs = user.isAcceptingWOs;
   return (
@@ -53,9 +52,7 @@ export default function HomeScreen() {
                       <Text
                         style={styles.homeHeader_content_location_text}
                         numberOfLines={1}>
-                        {currentAddress
-                          ? currentAddress
-                          : 'Gathering position...'}
+                        {location ? location : 'Gathering position...'}
                       </Text>
                     </TouchableOpacity>
                   ) : null}

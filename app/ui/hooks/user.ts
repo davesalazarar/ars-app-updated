@@ -11,7 +11,7 @@ export const useUser = () => {
   const user = useSelector((state: any) => state.user);
   const dispatcher = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const {watchPosition, clearWatch} = useLocation();
+  const {location, watchPosition, clearWatch} = useLocation();
 
   const storeUser = async (data: any) => {
     setIsLoading(true);
@@ -30,12 +30,17 @@ export const useUser = () => {
 
   const toggleDuty = () => {
     console.log('toggling duty');
-    if (!user.onDuty) {
-      watchPosition();
-      dispatcher(onDuty());
-    } else {
-      clearWatch();
-      dispatcher(offDuty());
+
+    try {
+      if (!user.onDuty) {
+        watchPosition();
+        dispatcher(onDuty());
+      } else {
+        clearWatch();
+        dispatcher(offDuty());
+      }
+    } catch (error) {
+      console.log('on duty error');
     }
   };
 
@@ -57,5 +62,5 @@ export const useUser = () => {
     };
     loadUser();
   }, [dispatcher, user]);
-  return {user, isLoading, storeUser, clearUser, toggleDuty};
+  return {location, user, isLoading, storeUser, clearUser, toggleDuty};
 };

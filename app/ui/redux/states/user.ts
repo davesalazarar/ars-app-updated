@@ -20,6 +20,7 @@ export const userSlice = createSlice({
     onDuty: false,
     isAcceptingWOs: false,
     isLoggedIn: false,
+    locationUpdateSuccess: false,
   },
   reducers: {
     saveUser: (state, action) => {
@@ -28,11 +29,21 @@ export const userSlice = createSlice({
     },
     onDuty: state => {
       console.log('on duty redux');
-      return {...state, onDuty: true, isAcceptingWOs: true};
+      return {
+        ...state,
+        onDuty: true,
+        isAcceptingWOs: true,
+        locationUpdateSuccess: true,
+      };
     },
     offDuty: state => {
       console.log('off duty redux');
-      return {...state, onDuty: false, isAcceptingWOs: false};
+      return {
+        ...state,
+        onDuty: false,
+        isAcceptingWOs: false,
+        locationUpdateSuccess: false,
+      };
     },
     resetUser: () => {
       return {
@@ -43,6 +54,7 @@ export const userSlice = createSlice({
         onDuty: false,
         isAcceptingWOs: false,
         isLoggedIn: false,
+        locationUpdateSuccess: false,
       };
     },
   },

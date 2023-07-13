@@ -13,6 +13,7 @@ interface Position {
 export const useLocation = () => {
   const [position, setPosition] = useState<Position | null>(null);
   const [subscriptionId, setSubscriptionId] = useState<number | null>(null);
+  const [location, setLocation] = useState('');
 
   const watchPosition = () => {
     try {
@@ -23,17 +24,15 @@ export const useLocation = () => {
             longitude: p.coords.longitude,
           };
           setPosition(coords);
-          console.log(coords);
           const usecase = LocationContainer.get<GetCurrentAddressUseCase>(
             LocationLocator.GetCurrentAddressUseCase,
           );
-          console.log('getting address', coords);
           if (coords) {
             const data = await usecase.getCurrentAddress(
-              coords.latitude.toString(),
               coords.longitude.toString(),
+              coords.latitude.toString(),
             );
-            console.log('data from backend', data);
+            setLocation(data.address);
           }
         },
         error => Alert.alert('WatchPosition Error', JSON.stringify(error)),
@@ -51,10 +50,11 @@ export const useLocation = () => {
     subscriptionId !== null && Geolocation.clearWatch(subscriptionId);
     setSubscriptionId(null);
     setPosition(null);
+    setLocation('');
     console.log('watch cleared');
   };
 
   useEffect(() => {}, [position]);
 
-  return {position, watchPosition, clearWatch};
+  return {location, watchPosition, clearWatch};
 };
