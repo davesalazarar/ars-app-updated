@@ -83,7 +83,7 @@ export default function ServiceCoverageScreen() {
                       <Text style={styles.item_title}>
                         {marketZone.marketName}
                       </Text>
-                      <View style={styles.item_title_right_content}>
+                      <View>
                         <Text
                           style={styles.item_title_right_content_text}
                           numberOfLines={1}
