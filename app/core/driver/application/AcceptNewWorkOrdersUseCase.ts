@@ -1,10 +1,9 @@
 import {inject, injectable} from 'inversify';
-import {WorkStatus} from '../domain/Driver';
 import {DriverLocator} from '../domain/DriverLocator';
 import {DriverRepository} from '../domain/DriverRepository';
 
 @injectable()
-export class OffDutyUseCase {
+export class AcceptNewWorkOrdersUseCase {
   private _repository: DriverRepository;
 
   constructor(
@@ -13,7 +12,7 @@ export class OffDutyUseCase {
     this._repository = repository;
   }
 
-  async onDuty(): Promise<void> {
-    await this._repository.setWorkStatus(WorkStatus.OFF_DUTY);
+  async AcceptNewWorkOrders(acceptNewWorkOrders: boolean): Promise<void> {
+    await this._repository.acceptNewWorkOrders(acceptNewWorkOrders);
   }
 }

@@ -4,7 +4,7 @@ import {DriverLocator} from '../domain/DriverLocator';
 import {DriverRepository} from '../domain/DriverRepository';
 
 @injectable()
-export class OnDutyUseCase {
+export class SetWorkStatusUseCase {
   private _repository: DriverRepository;
 
   constructor(
@@ -13,7 +13,8 @@ export class OnDutyUseCase {
     this._repository = repository;
   }
 
-  async onDuty(): Promise<void> {
-    await this._repository.setWorkStatus(WorkStatus.ON_DUTY);
+  async setWorkStatus(workStatus: WorkStatus): Promise<void> {
+    console.log('status', workStatus);
+    await this._repository.setWorkStatus(workStatus);
   }
 }

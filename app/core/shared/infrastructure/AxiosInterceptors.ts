@@ -36,7 +36,6 @@ export const AxiosRequestconfiguration = async (config: any) => {
   return config;
 };
 export const axiosResponseConfiguration = async (res: any) => {
-  console.log(res);
   if (res.data && res.data.code) {
     const statusCode = res.data.code;
     ErrorValidator(statusCode);

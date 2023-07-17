@@ -6,6 +6,10 @@ import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {offDuty, onDuty, resetUser, saveUser} from '@/ui/redux/states/user';
 import {useLocation} from './location';
+import {DriverContainer} from '@/core/driver/DriverContainer';
+import {WorkStatus} from '@/core/driver/domain/Driver';
+import {SetWorkStatusUseCase} from '@/core/driver/application/SetWorkStatusUseCase';
+import {DriverLocator} from '@/core/driver/domain/DriverLocator';
 
 export const useUser = () => {
   const user = useSelector((state: any) => state.user);
@@ -24,6 +28,15 @@ export const useUser = () => {
     setIsLoading(false);
   };
 
+  const setWorkStatus = async (workStatus: WorkStatus) => {
+    setIsLoading(true);
+    const usecase = DriverContainer.get<SetWorkStatusUseCase>(
+      DriverLocator.SetWorkStatusUseCase,
+    );
+    const response = await usecase.setWorkStatus(workStatus);
+    console.log(response);
+    setIsLoading(false);
+  };
   const clearUser = () => {
     dispatcher(resetUser());
   };
@@ -35,12 +48,14 @@ export const useUser = () => {
       if (!user.onDuty) {
         watchPosition();
         dispatcher(onDuty());
+        setWorkStatus(WorkStatus.ON_DUTY);
       } else {
         clearWatch();
         dispatcher(offDuty());
+        setWorkStatus(WorkStatus.OFF_DUTY);
       }
     } catch (error) {
-      console.log('on duty error');
+      console.log('on duty error', error);
     }
   };
 
