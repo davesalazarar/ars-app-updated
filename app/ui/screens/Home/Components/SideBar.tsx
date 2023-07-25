@@ -22,7 +22,7 @@ import PaymentsScreen from '@/ui/screens/Payments';
 import ResourcesScreen from '@/ui/screens/Resources';
 import SettingsScreen from '@/ui/screens/Settings';
 import SupportCenterScreen from '@/ui/screens/SupportCenter';
-import WOHistoryScreen from '@/ui/screens/WOHistory';
+import WOHistoryScreen from '@/ui/screens/WOHistory/WOHistory';
 import {styles} from '../Styles';
 import StatusLabel from './StatusHeader';
 import {LogoutUseCase} from '@/core/auth/application/LogoutUseCase';

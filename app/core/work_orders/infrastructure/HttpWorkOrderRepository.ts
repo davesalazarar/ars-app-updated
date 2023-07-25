@@ -5,22 +5,18 @@ import {
   AxiosRequestconfiguration,
   axiosResponseConfiguration,
 } from '@/core/shared/infrastructure/AxiosInterceptors';
-import {LocationRepository} from '../domain/LocationRepository';
-import {AppLocation, AddressResponse} from '../domain/AppLocation';
+import {WorkOrderRepository} from '../domain/WorkOrderRepository';
+import {WorkOrderHistoryRequest} from '../domain/WorkOrder';
 
 @injectable()
-export class HttpLocationRepository implements LocationRepository {
-  async getCurrentAddress(location: AppLocation): Promise<AddressResponse> {
+export class HttpWorkOrderRepository implements WorkOrderRepository {
+  async getWorkOrderHistory(request: WorkOrderHistoryRequest): Promise<any[]> {
     const instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
     instance.interceptors.response.use(axiosResponseConfiguration);
-    const data = await instance.post(
-      `${HOST}/app/driver/address/get`,
-      {...location},
-      {
-        withCredentials: true,
-      },
-    );
+    const data = await instance.post(`${HOST}/app/order/driver/list`, request, {
+      withCredentials: true,
+    });
     return data.data.data;
   }
 }

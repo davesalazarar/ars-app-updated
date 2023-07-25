@@ -14,7 +14,6 @@ export class SetWorkStatusUseCase {
   }
 
   async setWorkStatus(workStatus: WorkStatus): Promise<void> {
-    console.log('status', workStatus);
     await this._repository.setWorkStatus(workStatus);
   }
 }

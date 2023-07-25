@@ -1,9 +1,9 @@
 import * as Config from '../../../../app.config.json';
 import {Platform} from 'react-native';
-import appVersionData from '../domain/appVersion.json';
+import appVersionData from './appVersion.json';
 
 // Envs: dev, sit, uat, gate
-export let env = Config.API_ENV || 'gate';
+export const env = Config.API_ENV || 'gate';
 
 export const googleApiKey = Config.GOOGLE_MAPS_KEY;
 
@@ -43,4 +43,4 @@ export const appVersion = Platform.select({
 
 export const HOST = handleHostUrl(env);
 
-export const socket_url = handlesocketUrl(env);
+export const SOCKET_URL = handlesocketUrl(env);

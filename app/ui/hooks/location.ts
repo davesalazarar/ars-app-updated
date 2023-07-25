@@ -51,7 +51,6 @@ export const useLocation = () => {
     setSubscriptionId(null);
     setPosition(null);
     setLocation('');
-    console.log('watch cleared');
   };
 
   useEffect(() => {}, [position]);

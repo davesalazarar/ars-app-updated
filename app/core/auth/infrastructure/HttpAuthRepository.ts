@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {HOST} from '@/core/shared/infrastructure/Constants';
+import {HOST} from '@/core/shared/domain/Constants';
 import {injectable} from 'inversify';
 import {AuthRepository} from '@/core/auth/domain/AuthRepossitory';
 import {

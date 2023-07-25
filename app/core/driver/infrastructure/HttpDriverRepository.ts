@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {HOST} from '@/core/shared/infrastructure/Constants';
+import {HOST} from '@/core/shared/domain/Constants';
 import {injectable} from 'inversify';
 import {
   AxiosRequestconfiguration,
@@ -21,7 +21,6 @@ export class HttpDriverRepository implements DriverRepository {
         withCredentials: true,
       },
     );
-    console.log('accept work orders', data.data);
     return data.data.data;
   }
   async setWorkStatus(status: WorkStatus): Promise<any> {
@@ -35,7 +34,6 @@ export class HttpDriverRepository implements DriverRepository {
         withCredentials: true,
       },
     );
-    console.log('work status', data.data);
     return data.data.data;
   }
 }

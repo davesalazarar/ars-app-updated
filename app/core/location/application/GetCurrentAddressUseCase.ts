@@ -17,7 +17,6 @@ export class GetCurrentAddressUseCase {
     longitude: string,
     latitude: string,
   ): Promise<AddressResponse> {
-    console.log('enter on location use case');
     const location: AppLocation = {longitude, latitude};
     return await this._repository.getCurrentAddress(location);
   }

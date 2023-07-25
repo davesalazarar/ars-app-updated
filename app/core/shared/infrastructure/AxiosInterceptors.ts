@@ -1,6 +1,6 @@
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {HOST, versionCode} from '@/core/shared/infrastructure/Constants';
+import {HOST, versionCode} from '@/core/shared/domain/Constants';
 import {InvalidAppVersionError, InvalidTokenError} from '../domain/Errors';
 import {StorageKeys} from '../domain/StorageKeys';
 import NetInfo from '@react-native-community/netinfo';

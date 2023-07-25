@@ -33,8 +33,7 @@ export const useUser = () => {
     const usecase = DriverContainer.get<SetWorkStatusUseCase>(
       DriverLocator.SetWorkStatusUseCase,
     );
-    const response = await usecase.setWorkStatus(workStatus);
-    console.log(response);
+    await usecase.setWorkStatus(workStatus);
     setIsLoading(false);
   };
   const clearUser = () => {
@@ -42,8 +41,6 @@ export const useUser = () => {
   };
 
   const toggleDuty = () => {
-    console.log('toggling duty');
-
     try {
       if (!user.onDuty) {
         watchPosition();
