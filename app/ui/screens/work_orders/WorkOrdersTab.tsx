@@ -1,17 +1,25 @@
+import * as React from 'react';
+
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {scaleHeight} from '@/ui/utils/screenUtil';
 import {styles} from './Styles';
 
 const noWorkorders = require('@/assets/no_workorders.png');
-
+enum FilterTypes {
+  NEW = 1,
+  ONGOING = 2,
+  FEE_SUBMIT = 3,
+  PENDING = 4,
+  PAID = 5,
+  ALL = 0,
+}
 const _FilterList = [
-  // {type: 'Available for Pick', key: 6},
-  {type: 'New', key: 1},
-  {type: 'Ongoing', key: 2},
-  {type: 'Fee Submit', key: 3},
-  {type: 'Pending', key: 4},
-  {type: 'Paid', key: 5},
-  {type: 'All', key: 0},
+  {type: 'New', key: FilterTypes.NEW},
+  {type: 'Ongoing', key: FilterTypes.ONGOING},
+  {type: 'Fee Submit', key: FilterTypes.FEE_SUBMIT},
+  {type: 'Pending', key: FilterTypes.PENDING},
+  {type: 'Paid', key: FilterTypes.PAID},
+  {type: 'All', key: FilterTypes.ALL},
 ];
 const FilterBadges = () => {
   return (

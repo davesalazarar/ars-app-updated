@@ -92,7 +92,7 @@ export const SideBar = () => {
       <Drawer.Screen
         name="WO History"
         component={WOHistoryNavigation}
-        options={{drawerIcon: HistoryIcon}}
+        options={{drawerIcon: HistoryIcon, headerShown: false}}
       />
       <Drawer.Screen
         name="Communication"

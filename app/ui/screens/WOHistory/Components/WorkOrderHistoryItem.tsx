@@ -56,7 +56,9 @@ export const WorkOrderHistoryItem = (props: ListItemProps) => {
           workOrder.orderStatus !== 4 &&
           workOrder.orderStatus !== 13
         ) {
-          navigation.navigate('WOHistoryDetail');
+          navigation.navigate('WOHistoryDetail', {
+            name: `WO #${workOrder.orderId}`,
+          });
         }
       }}>
       <Avatar
