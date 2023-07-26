@@ -5,33 +5,22 @@ import Picker from 'react-native-picker';
 import {useState} from 'react';
 import {Icon} from '@rneui/themed';
 import {useRescueServices} from '@/ui/hooks/service';
-import {
-  createDateData,
-  handleWorkOrdersGroupingByDate,
-} from '@/ui/utils/dateUtils';
+import {createDateData} from '@/ui/utils/dateUtils';
 import moment from 'moment';
 import {WorkOrdersHistoryList} from './Components/WorkOrdersHistoryList';
-import {WorkOrdersContainer} from '@/core/work_orders/WorkOrdersContainer';
-import {GetWorkOrderHistoryUseCase} from '@/core/work_orders/application/GetWorkOrderHistoryUseCase';
-import {WorkOrderHistoryRequest} from '@/core/work_orders/domain/WorkOrder';
-import {WorkOrderLocator} from '@/core/work_orders/domain/WorkOrderLocator';
+import {useWorkOrdersHistory} from '@/ui/hooks/workOrders';
 
-export default function WOHistoryScreen() {
+export default function WOHistoryScreen({navigation}: any) {
   const {rescueServices} = useRescueServices();
-  const [workOrders, setWorkOrders] = useState<any[]>([]);
   const [selectedService, setSelectedService] = useState('All Services');
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState('All Time');
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState('');
-
-  const fetchWorkOrders = async (request: WorkOrderHistoryRequest) => {
-    const usecase = WorkOrdersContainer.get<GetWorkOrderHistoryUseCase>(
-      WorkOrderLocator.GetWorkOrderHistoryUseCase,
-    );
-    return await usecase.GetWorkOrderHistory(request);
-  };
-
+  const {formattedWorkOrders} = useWorkOrdersHistory(
+    selectedService,
+    rescueServices,
+    selectedDateType,
+  );
   const showDatePicker = () => {
     Picker.init({
       pickerTitleText: 'Time Select',
@@ -41,13 +30,13 @@ export default function WOHistoryScreen() {
       pickerBg: [255, 255, 255, 1],
       pickerData: createDateData(selectedYear),
       pickerFontColor: [33, 33, 33, 1],
-      onPickerConfirm: pickedValue => {
+      onPickerConfirm: async pickedValue => {
         const newDate = moment([pickedValue[0]])
           .month(pickedValue[1])
           .format('YYYY-MM-DD');
-        setSelectedDateType(newDate);
         setSelectedYear(pickedValue[0]);
         setSelectedMonth(pickedValue[1]);
+        setSelectedDateType(newDate);
       },
       onPickerCancel: () => setSelectedDateType('All Time'),
     });
@@ -65,18 +54,7 @@ export default function WOHistoryScreen() {
       pickerFontColor: [33, 33, 33, 1],
       pickerFontSize: 12,
       onPickerConfirm: async (pickedValue: any) => {
-        setIsRefreshing(true);
         setSelectedService(pickedValue[0]);
-        const request = {
-          page: 1,
-          pageSize: 10,
-          selectedService,
-        };
-        const data = await fetchWorkOrders(request);
-        setWorkOrders(
-          handleWorkOrdersGroupingByDate(data, workOrders, isRefreshing),
-        );
-        setIsRefreshing(false);
       },
     });
     Picker.show();
@@ -91,7 +69,7 @@ export default function WOHistoryScreen() {
       pickerBg: [255, 255, 255, 1],
       pickerData: ['All Time', 'Custom Time'],
       pickerFontColor: [33, 33, 33, 1],
-      onPickerConfirm: (pickedValue: any) => {
+      onPickerConfirm: async (pickedValue: any) => {
         setSelectedDateType(pickedValue[0]);
         if (pickedValue[0] === 'Custom Time') {
           showDatePicker();
@@ -100,6 +78,7 @@ export default function WOHistoryScreen() {
     });
     Picker.show();
   };
+
   return (
     <SafeAreaView style={styles.order_content}>
       <View style={styles.filtercontainer}>
@@ -126,7 +105,10 @@ export default function WOHistoryScreen() {
           </View>
         </TouchableOpacity>
       </View>
-      <WorkOrdersHistoryList workOrders={workOrders} />
+      <WorkOrdersHistoryList
+        navigation={navigation}
+        workOrders={formattedWorkOrders}
+      />
     </SafeAreaView>
   );
 }

@@ -1,3 +1,5 @@
+import {Pagination} from '@/core/shared/domain/Pagination';
+
 export interface WorkOrderHistoryRequest {
   page: number;
   pageSize: number;
@@ -11,6 +13,11 @@ export interface WorkOrder {
   orderStatus: number;
   orderStatusName: string;
   services: WorkOrderService[];
+}
+
+export interface WorkOrderHistoryResponse {
+  data: WorkOrder[];
+  page: Pagination;
 }
 
 export interface WorkOrderService {

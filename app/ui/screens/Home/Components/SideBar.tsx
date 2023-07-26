@@ -22,7 +22,6 @@ import PaymentsScreen from '@/ui/screens/Payments';
 import ResourcesScreen from '@/ui/screens/Resources';
 import SettingsScreen from '@/ui/screens/Settings';
 import SupportCenterScreen from '@/ui/screens/SupportCenter';
-import WOHistoryScreen from '@/ui/screens/WOHistory/WOHistory';
 import {styles} from '../Styles';
 import StatusLabel from './StatusHeader';
 import {LogoutUseCase} from '@/core/auth/application/LogoutUseCase';
@@ -31,6 +30,7 @@ import {AuthLocator} from '@/core/auth/domain/AuthLocator';
 import {useUser} from '@/ui/hooks/user';
 import HomeNavigation from '../Navigation/HomeNavigation';
 import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage/ServiceCoverage';
+import WOHistoryNavigation from '@/ui/screens/WOHistory/WOHistoryNavigation';
 
 const DrawerContent = (props: any) => {
   const {clearUser} = useUser();
@@ -91,7 +91,7 @@ export const SideBar = () => {
       />
       <Drawer.Screen
         name="WO History"
-        component={WOHistoryScreen}
+        component={WOHistoryNavigation}
         options={{drawerIcon: HistoryIcon}}
       />
       <Drawer.Screen

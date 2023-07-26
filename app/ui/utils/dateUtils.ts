@@ -18,12 +18,7 @@ export const createDateData = (selectedYear: number): any[] => {
   return date;
 };
 
-export const handleWorkOrdersGroupingByDate = (
-  data: any[],
-  historyOrder: any[],
-  isRefresh: boolean,
-) => {
-  let res = isRefresh ? [] : historyOrder.concat();
+export const handleWorkOrdersGroupingByDate = (data: any[], res: any[]) => {
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
     // const time = element.acceptTime;

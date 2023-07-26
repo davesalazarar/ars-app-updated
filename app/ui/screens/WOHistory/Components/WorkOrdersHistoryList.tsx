@@ -14,7 +14,7 @@ const renderSectionHeader = (sections: any) => {
     </View>
   );
 };
-export const WorkOrdersHistoryList = ({workOrders}: any) => {
+export const WorkOrdersHistoryList = ({workOrders, navigation}: any) => {
   const no_order = require('@/assets/no_workorders.png');
   const list =
     workOrders.length === 0 ? (
@@ -35,7 +35,9 @@ export const WorkOrdersHistoryList = ({workOrders}: any) => {
         onEndReachedThreshold={0.2}
         renderSectionHeader={renderSectionHeader}
         renderItem={({item}) => {
-          return <WorkOrderHistoryItem workOrder={item} />;
+          return (
+            <WorkOrderHistoryItem navigation={navigation} workOrder={item} />
+          );
         }}
         ItemSeparatorComponent={renderItemSeparator}
         stickySectionHeadersEnabled={false}

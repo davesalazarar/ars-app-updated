@@ -17,7 +17,6 @@ interface ListItemProps {
   workOrder: WorkOrder;
 }
 const handleBackstageServices = (serviceId: number | undefined) => {
-  console.log('handleBackstageServices', serviceId);
   switch (serviceId) {
     case 1:
       return Lockout;
@@ -47,7 +46,7 @@ export const WorkOrderHistoryItem = (props: ListItemProps) => {
         workOrder.orderStatus === 4 ||
         workOrder.orderStatus === 5 ||
         workOrder.orderStatus === 13
-          ? {backgroundColor: '#CCC'}
+          ? styles.list_item_background
           : null,
       ]}
       onPress={() => {
@@ -57,11 +56,7 @@ export const WorkOrderHistoryItem = (props: ListItemProps) => {
           workOrder.orderStatus !== 4 &&
           workOrder.orderStatus !== 13
         ) {
-          navigation.navigate('OrderDetail', {
-            workOrder: workOrder,
-            additonalParent: 'OrderDetail',
-            parent: 'Order',
-          });
+          navigation.navigate('WOHistoryDetail');
         }
       }}>
       <Avatar
@@ -78,7 +73,8 @@ export const WorkOrderHistoryItem = (props: ListItemProps) => {
             </Text>
           </View>
         </ListItem.Title>
-        <ListItem.Subtitle style={[styles.item_subtitle, {color: 'red'}]}>
+        <ListItem.Subtitle
+          style={[styles.item_subtitle, styles.list_item_subtitle_red]}>
           {workOrder.orderStatusName}
         </ListItem.Subtitle>
       </ListItem.Content>
@@ -86,6 +82,8 @@ export const WorkOrderHistoryItem = (props: ListItemProps) => {
   );
 };
 const styles = StyleSheet.create({
+  list_item_subtitle_red: {color: 'red'},
+  list_item_background: {backgroundColor: '#CCC'},
   order_item: {
     marginBottom: px2dp(24),
     marginLeft: px2dp(32),
