@@ -3,6 +3,7 @@ import {GetWorkOrderHistoryUseCase} from '@/core/work_orders/application/GetWork
 import {WorkOrderLocator} from '@/core/work_orders/domain/WorkOrderLocator';
 import {
   CurrentBillingOverviewResponse,
+  CurrentBillingResponse,
   WorkOrderHistoryRequest,
 } from '@/core/work_orders/domain/WorkOrder';
 import {useState, useEffect} from 'react';
@@ -12,7 +13,7 @@ import {GetTodayPoolWorkOrdersUseCase} from '@/core/work_orders/application/GetT
 import {GetTodayOngoingWorkOrdersUseCase} from '@/core/work_orders/application/GetTodayOngoingWorkOrdersUseCase';
 import {GetTodayWorkOrdersUseCase} from '@/core/work_orders/application/GetTodayWorkOrdersUseCase';
 import {GetCurrentBillingOverviewUseCase} from '@/core/work_orders/application/GetCurrentBillingOverviewUseCase';
-import {GetCurrentBillingUseCase} from 'core/work_orders/application/GetCurrentBillingUseCase';
+import {GetCurrentBillingUseCase} from '@/core/work_orders/application/GetCurrentBillingUseCase';
 
 export enum FilterTypes {
   NEW = 1,
@@ -95,26 +96,61 @@ export const useTabWorkOrders = () => {
     );
     return await usecase.GetTodayOngoingWorkOrders();
   };
-  const fetchTodayWorkOrders = async () => {
+  const fetchFeeSubmitWorkOrders = async () => {
     const usecase = WorkOrdersContainer.get<GetTodayWorkOrdersUseCase>(
       WorkOrderLocator.GetTodayWorkOrdersUseCase,
     );
     return await usecase.GetTodayWorkOrders({queryType: 3});
   };
+  const fetchPendingWorkOrders = async () => {
+    const usecase = WorkOrdersContainer.get<GetTodayWorkOrdersUseCase>(
+      WorkOrderLocator.GetTodayWorkOrdersUseCase,
+    );
+    return await usecase.GetTodayWorkOrders({queryType: 4});
+  };
+  const fetchPaidWorkOrders = async () => {
+    const usecase = WorkOrdersContainer.get<GetTodayWorkOrdersUseCase>(
+      WorkOrderLocator.GetTodayWorkOrdersUseCase,
+    );
+    return await usecase.GetTodayWorkOrders({queryType: 5});
+  };
+  const fetchAllWorkOrders = async () => {
+    const usecase = WorkOrdersContainer.get<GetTodayWorkOrdersUseCase>(
+      WorkOrderLocator.GetTodayWorkOrdersUseCase,
+    );
+    return await usecase.GetTodayWorkOrders({queryType: 0});
+  };
   useEffect(() => {
     const getWorkOrders = async () => {
-      console.log('selected filter', selectedFilterType);
-      if (selectedFilterType === FilterTypes.NEW) {
-        const data = await fetchPoolWorkOrders();
-        setWorkOrders(data);
-      }
-      if (selectedFilterType === FilterTypes.ONGOING) {
-        const data = await fetchOngoingWorkOrders();
-        setWorkOrders(data);
-      }
-      if (selectedFilterType === FilterTypes.FEE_SUBMIT) {
-        const data = await fetchTodayWorkOrders();
-        setWorkOrders(data);
+      let data: any[] = [];
+      switch (selectedFilterType) {
+        case FilterTypes.NEW:
+          data = await fetchPoolWorkOrders();
+          setWorkOrders(data);
+          break;
+        case FilterTypes.ONGOING:
+          data = await fetchOngoingWorkOrders();
+          setWorkOrders(data);
+          break;
+        case FilterTypes.FEE_SUBMIT:
+          data = await fetchFeeSubmitWorkOrders();
+          setWorkOrders(data);
+          break;
+        case FilterTypes.PENDING:
+          data = await fetchPendingWorkOrders();
+          setWorkOrders(data);
+          break;
+        case FilterTypes.PAID:
+          data = await fetchPaidWorkOrders();
+          setWorkOrders(data);
+          break;
+        case FilterTypes.ALL:
+          data = await fetchAllWorkOrders();
+          setWorkOrders(data);
+          break;
+        default:
+          setWorkOrders([]);
+          break;
       }
     };
     getWorkOrders();
@@ -125,7 +161,8 @@ export const useTabWorkOrders = () => {
 export const useTabBilling = () => {
   const [billingOverview, setBillingOverview] =
     useState<CurrentBillingOverviewResponse>({totalEarned: 0, completedWO: 0});
-  const [billings, setBillings] = useState<any>([]);
+  const [billings, setBillings] = useState<CurrentBillingResponse[]>([]);
+
   const fetchBillingOvervew = async () => {
     const usecase = WorkOrdersContainer.get<GetCurrentBillingOverviewUseCase>(
       WorkOrderLocator.GetCurrentBillingOverviewUseCase,
@@ -140,11 +177,10 @@ export const useTabBilling = () => {
   };
   useEffect(() => {
     const getWorkOrderOverview = async () => {
-      const billingOverview = await fetchBillingOvervew();
-      const billings = await fetchBillings();
-      console.log(billingOverview, billings);
-      setBillingOverview(billingOverview);
-      setBillings(billings);
+      const billingOverviewData = await fetchBillingOvervew();
+      const billingsData = await fetchBillings();
+      setBillingOverview(billingOverviewData);
+      setBillings(billingsData);
     };
     getWorkOrderOverview();
   }, []);

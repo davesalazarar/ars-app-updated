@@ -16,11 +16,11 @@ export interface WorkOrderRepository {
 
   getTodayWorkOrders(
     request: TodayWorkOrdersRequest,
-  ): Promise<TodayWorkOrdersResponse>;
+  ): Promise<TodayWorkOrdersResponse[]>;
 
   getTodayPoolWorkOrders(): Promise<TodayPoolWorkOrdersResponse[]>;
 
   getCurrentBilling(): Promise<CurrentBillingResponse[]>;
   getCurrentBillingOverview(): Promise<CurrentBillingOverviewResponse>;
-  getTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse>;
+  getTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse[]>;
 }

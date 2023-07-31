@@ -18,7 +18,7 @@ export class GetTodayWorkOrdersUseCase {
 
   async GetTodayWorkOrders(
     request: TodayWorkOrdersRequest,
-  ): Promise<TodayWorkOrdersResponse> {
+  ): Promise<TodayWorkOrdersResponse[]> {
     return await this._repository.getTodayWorkOrders(request);
   }
 }

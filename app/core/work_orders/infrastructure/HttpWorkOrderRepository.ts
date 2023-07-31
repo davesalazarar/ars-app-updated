@@ -55,7 +55,7 @@ export class HttpWorkOrderRepository implements WorkOrderRepository {
     const response = data.data.data;
     return response;
   }
-  async getTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse> {
+  async getTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse[]> {
     const instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
     instance.interceptors.response.use(axiosResponseConfiguration);
@@ -67,7 +67,7 @@ export class HttpWorkOrderRepository implements WorkOrderRepository {
   }
   async getTodayWorkOrders(
     request: TodayWorkOrdersRequest,
-  ): Promise<TodayWorkOrdersResponse> {
+  ): Promise<TodayWorkOrdersResponse[]> {
     const instance = axios.create();
     instance.interceptors.request.use(AxiosRequestconfiguration);
     instance.interceptors.response.use(axiosResponseConfiguration);

@@ -13,7 +13,7 @@ export class GetTodayOngoingWorkOrdersUseCase {
     this._repository = repository;
   }
 
-  async GetTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse> {
+  async GetTodayOngoingWorkOrders(): Promise<TodayOngoingWorkOrdersResponse[]> {
     return await this._repository.getTodayOngoingWorkOrders();
   }
 }
