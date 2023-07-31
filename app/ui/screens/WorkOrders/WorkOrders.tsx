@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useState} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import BillingTab from './BillingTab';
-import WorkOrdersTab from './WorkOrdersTab';
+import BillingTab from './BillingTab/BillingTab';
+import WorkOrdersTab from './WorkOrdersTab/WorkOrdersTab';
 
 const renderScene = SceneMap({
   wo: WorkOrdersTab,

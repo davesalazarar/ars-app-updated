@@ -10,6 +10,9 @@ import {DriverContainer} from '@/core/driver/DriverContainer';
 import {WorkStatus} from '@/core/driver/domain/Driver';
 import {SetWorkStatusUseCase} from '@/core/driver/application/SetWorkStatusUseCase';
 import {DriverLocator} from '@/core/driver/domain/DriverLocator';
+import {LogoutUseCase} from '@/core/auth/application/LogoutUseCase';
+import {AuthContainer} from '@/core/auth/authContainer';
+import {AuthLocator} from '@/core/auth/domain/AuthLocator';
 
 export const useUser = () => {
   const user = useSelector((state: any) => state.user);
@@ -55,7 +58,17 @@ export const useUser = () => {
       console.log('on duty error', error);
     }
   };
-
+  const logout = async () => {
+    try {
+      const usecase = AuthContainer.get<LogoutUseCase>(
+        AuthLocator.LogoutUseCase,
+      );
+      await usecase.logout();
+      clearUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const loadUser = async () => {
       setIsLoading(true);
@@ -74,5 +87,5 @@ export const useUser = () => {
     };
     loadUser();
   }, [dispatcher, user]);
-  return {location, user, isLoading, storeUser, clearUser, toggleDuty};
+  return {logout, location, user, isLoading, storeUser, clearUser, toggleDuty};
 };

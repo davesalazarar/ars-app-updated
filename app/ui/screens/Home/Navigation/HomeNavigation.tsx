@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import WorkOrdersScreen from '@/ui/screens/work_orders/WorkOrders';
+import WorkOrdersScreen from '@/ui/screens/WorkOrders/WorkOrders';
 import {HomeTabIcon, WorkOrdersIcon} from '@/ui/components/Icons';
 import {Provider} from 'react-redux';
 import {appStore} from '@/ui/redux/store';

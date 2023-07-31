@@ -5,33 +5,12 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {px2dp, setSpText, scaleHeight} from '@/ui/utils/screenUtil';
 import {WorkOrder} from '@/core/work_orders/domain/WorkOrder';
-
-const Battery = require('@/assets/order/Battery.png');
-const Fuel = require('@/assets/order/Fuel.png');
-const Lockout = require('@/assets/order/Lockout.png');
-const Tire = require('@/assets/order/Tire.png');
-const Jump = require('@/assets/order/Jump.png');
+import {handleBackstageServices} from '@/ui/utils/styleUtils';
 
 interface ListItemProps {
   navigation?: any;
   workOrder: WorkOrder;
 }
-const handleBackstageServices = (serviceId: number | undefined) => {
-  switch (serviceId) {
-    case 1:
-      return Lockout;
-    case 2:
-      return Jump;
-    case 3:
-      return Tire;
-    case 4:
-      return Fuel;
-    case 8:
-      return Battery;
-    default:
-      break;
-  }
-};
 
 export const WorkOrderHistoryItem = (props: ListItemProps) => {
   const {navigation, workOrder} = props;

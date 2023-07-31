@@ -88,10 +88,22 @@ export const styles = StyleSheet.create({
     marginLeft: px2dp(24),
     position: 'relative',
   },
+  selected_filter_item_text: {
+    backgroundColor: '#2D8DBC',
+  },
+  work_order_list: {
+    flex: 1,
+    backgroundColor: '#F2F2F2',
+    paddingBottom: scaleHeight(200),
+    marginBottom: scaleHeight(100),
+  },
   filter_item_text_content: {
     color: 'rgba(45, 141, 188, 1)',
     fontSize: setSpText(32),
     paddingHorizontal: px2dp(32),
+  },
+  selected_filter_item_text_content: {
+    color: 'rgba(255, 255, 255, 1)',
   },
   filter_item_bage: {
     position: 'absolute',

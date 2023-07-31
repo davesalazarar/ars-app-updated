@@ -24,34 +24,21 @@ import SettingsScreen from '@/ui/screens/Settings';
 import SupportCenterScreen from '@/ui/screens/SupportCenter';
 import {styles} from '../Styles';
 import StatusLabel from './StatusHeader';
-import {LogoutUseCase} from '@/core/auth/application/LogoutUseCase';
-import {AuthContainer} from '@/core/auth/authContainer';
-import {AuthLocator} from '@/core/auth/domain/AuthLocator';
 import {useUser} from '@/ui/hooks/user';
 import HomeNavigation from '../Navigation/HomeNavigation';
 import ServiceCoverageScreen from '@/ui/screens/ServiceCoverage/ServiceCoverage';
 import WOHistoryNavigation from '@/ui/screens/WOHistory/WOHistoryNavigation';
 
 const DrawerContent = (props: any) => {
-  const {clearUser} = useUser();
-  const Logout = async () => {
-    try {
-      const usecase = AuthContainer.get<LogoutUseCase>(
-        AuthLocator.LogoutUseCase,
-      );
-      await usecase.logout();
-      clearUser();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {logout} = useUser();
+
   return (
     <DrawerContentScrollView {...props}>
       <View>
         <DrawerItemList {...props} />
       </View>
       <View style={styles.logincontainer}>
-        <TouchableOpacity onPress={Logout} style={{borderRadius: 300}}>
+        <TouchableOpacity onPress={logout} style={{borderRadius: 300}}>
           <LinearGradient
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
